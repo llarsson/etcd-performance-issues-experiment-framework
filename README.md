@@ -16,7 +16,7 @@ This should run on what you consider to be your control node: the one that initi
 
 ## Usage
 
-This framework does not (yet?) have great user experience. You have been warned. :) Please direct any questions about usage to [mailto:larsson@cs.umu.se](Lars Larsson).
+This framework does not (yet?) have great user experience. You have been warned. :) Please direct any questions about usage to [Lars](mailto:larsson@cs.umu.se) (@llarsson here at GitHub).
 
 Take inspiration from the shell scripts that define experiments, such as `define-loadgeneration.sh` in how to define scenarios and experiments. If you need to add columns to the database, make a database migration for it. Give all your scenarios some common prefix. 
 
