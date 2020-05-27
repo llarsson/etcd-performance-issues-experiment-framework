@@ -1,0 +1,1 @@
+\copy (select distinct(experiment_id) from experiments JOIN timeseries USING(experiment_id) where failure_rps > success_rps * 5 AND scenario_id IN (select scenario_id from scenarios where scenario_id like 'scaling-10-pods%')) TO '/tmp/degenerate-experiments.txt';

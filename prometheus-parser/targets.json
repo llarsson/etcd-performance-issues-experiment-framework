@@ -1,0 +1,169 @@
+{
+    "istio_requests_total_backend": {
+        "QUERY": "istio_requests_total{destination_service_name=\"backend\"}",
+        "STEP": "1s",
+        "SERVER": "PROMETHEUS-ISTIO"
+    },
+    "cluster_cpu_utilisation": {
+        "QUERY": "1-avg(rate(node_cpu_seconds_total{mode=\"idle\"}[1m]))",
+        "STEP": "1s",
+        "SERVER": "PROMETHEUS-OPERATOR"
+    },
+    "container_memory_usage_min": {
+        "QUERY": "min(container_memory_usage_bytes{namespace=\"default\",pod_name=~\"backend.+\",container_name!=\"POD\",container_name!=\"\"})by(container_name)",
+        "STEP": "1s",
+        "SERVER": "PROMETHEUS-OPERATOR",
+        "NAMING_KEY": "container_name"
+    },
+    "backend_container_memory_usage_per_pod": {
+        "QUERY": "sum(container_memory_usage_bytes{namespace=\"default\", container_name=\"backend\"}) by (pod_name)",
+        "STEP": "1s",
+        "SERVER": "PROMETHEUS-OPERATOR",
+        "NAMING_KEY": "pod_name"
+    },
+    "backend_container_cpu_usage_per_pod": {
+        "QUERY": "sum(container_cpu_usage_seconds_total{namespace=\"default\", container_name=\"backend\"}) by (pod_name)",
+        "STEP": "1s",
+        "SERVER": "PROMETHEUS-OPERATOR",
+        "NAMING_KEY": "pod_name"
+    },
+    "istio_container_memory_usage_per_pod": {
+        "QUERY": "sum(container_memory_usage_bytes{namespace=\"default\", container_name=\"istio-proxy\"}) by (pod_name)",
+        "STEP": "1s",
+        "SERVER": "PROMETHEUS-OPERATOR",
+        "NAMING_KEY": "pod_name"
+    },
+    "istio_container_cpu_usage_per_pod": {
+        "QUERY": "sum(container_cpu_usage_seconds_total{namespace=\"default\", container_name=\"istio-proxy\"}) by (pod_name)",
+        "STEP": "1s",
+        "SERVER": "PROMETHEUS-OPERATOR",
+        "NAMING_KEY": "pod_name"
+    },
+    "cluster_memory_utilisation": {
+        "QUERY": "1-sum(:node_memory_MemFreeCachedBuffers_bytes:sum) / sum(:node_memory_MemTotal_bytes:sum)",
+        "STEP": "1s",
+        "SERVER": "PROMETHEUS-OPERATOR"
+    },
+    "container_memory_usage_max": {
+        "QUERY": "max(container_memory_usage_bytes{namespace=\"default\",pod_name=~\"backend.+\", container_name!=\"POD\", container_name!=\"\"})by(container_name)",
+        "STEP": "1s",
+        "SERVER": "PROMETHEUS-OPERATOR",
+        "NAMING_KEY": "container_name"
+    },
+    "replicas_desired": {
+        "QUERY": "kube_hpa_status_desired_replicas{hpa=\"backend\"}",
+        "STEP": "1s",
+        "SERVER": "PROMETHEUS-OPERATOR"
+    },
+    "container_cpu_usage_max": {
+        "QUERY": "max(namespace_pod_name_container_name:container_cpu_usage_seconds_total:sum_rate{namespace=\"default\", pod_name=~\"backend.+\", container_name!=\"POD\"}) by (container_name)",
+        "STEP": "1s",
+        "SERVER": "PROMETHEUS-OPERATOR",
+        "NAMING_KEY": "container_name"
+    },
+    "replicas_unavailable": {
+        "QUERY": "kube_deployment_status_replicas_unavailable{deployment=\"backend\"}",
+        "STEP": "1s",
+        "SERVER": "PROMETHEUS-OPERATOR"
+    },
+    "container_cpu_usage_avg": {
+        "QUERY": "avg(namespace_pod_name_container_name:container_cpu_usage_seconds_total:sum_rate{namespace=\"default\", pod_name=~\"backend.+\", container_name!=\"POD\"}) by (container_name)",
+        "STEP": "1s",
+        "SERVER": "PROMETHEUS-OPERATOR",
+        "NAMING_KEY": "container_name"
+    },
+    "replicas_available": {
+        "QUERY": "kube_deployment_status_replicas_available{namespace=\"default\", deployment=\"backend\"}",
+        "STEP": "1s",
+        "SERVER": "PROMETHEUS-OPERATOR"
+    },
+    "container_restarts": {
+        "QUERY": "sum(kube_pod_container_status_restarts_total{namespace=\"default\", container=\"backend\"})",
+        "STEP": "1s",
+        "SERVER": "PROMETHEUS-OPERATOR"
+    },
+    "flannel_container_restarts": {
+        "QUERY": "sum(kube_pod_container_status_restarts_total{namespace=\"kube-system\", container=\"kube-flannel\"})",
+        "STEP": "1s",
+        "SERVER": "PROMETHEUS-OPERATOR"
+    },
+    "flannel_instance_count": {
+        "QUERY": "count(kube_pod_container_status_restarts_total{namespace=\"kube-system\", container=\"kube-flannel\"})",
+        "STEP": "1s",
+        "SERVER": "PROMETHEUS-OPERATOR"
+    },
+    "scheduler_container_restarts": {
+        "QUERY": "sum(kube_pod_container_status_restarts_total{namespace=\"kube-system\", container=\"kube-scheduler\"})",
+        "STEP": "1s",
+        "SERVER": "PROMETHEUS-OPERATOR"
+    },
+    "scheduler_instance_count": {
+        "QUERY": "count(kube_pod_container_status_restarts_total{namespace=\"kube-system\", container=\"kube-scheduler\"})",
+        "STEP": "1s",
+        "SERVER": "PROMETHEUS-OPERATOR"
+    },
+    "controller_manager_container_restarts": {
+        "QUERY": "sum(kube_pod_container_status_restarts_total{namespace=\"kube-system\", container=\"kube-controller-manager\"})",
+        "STEP": "1s",
+        "SERVER": "PROMETHEUS-OPERATOR"
+    },
+    "controller_manager_instance_count": {
+        "QUERY": "count(kube_pod_container_status_restarts_total{namespace=\"kube-system\", container=\"kube-controller-manager\"})",
+        "STEP": "1s",
+        "SERVER": "PROMETHEUS-OPERATOR"
+    },
+    "apiserver_container_restarts": {
+        "QUERY": "sum(kube_pod_container_status_restarts_total{namespace=\"kube-system\", container=\"kube-apiserver\"})",
+        "STEP": "1s",
+        "SERVER": "PROMETHEUS-OPERATOR"
+    },
+    "apiserver_instance_count": {
+        "QUERY": "count(kube_pod_container_status_restarts_total{namespace=\"kube-system\", container=\"kube-apiserver\"}) by (instance)",
+        "STEP": "1s",
+        "SERVER": "PROMETHEUS-OPERATOR"
+    },
+    "cluster_disk_bytes_written" : {
+        "QUERY": "sum(rate(node_disk_written_bytes_total[1m]))",
+        "STEP": "1s",
+        "SERVER": "PROMETHEUS-OPERATOR"
+    },
+    "cluster_disk_bytes_read" : {
+        "QUERY": "sum(rate(node_disk_read_bytes_total[1m]))",
+        "STEP": "1s",
+        "SERVER": "PROMETHEUS-OPERATOR"
+    },
+    "cluster_network_bytes_written" : {
+        "QUERY": "sum(irate(node_network_transmit_bytes_total{job=\"node-exporter\", device=~\"ens.+\"}[1m]))",
+        "STEP": "1s",
+        "SERVER": "PROMETHEUS-OPERATOR"
+    },
+    "cluster_network_bytes_read" : {
+        "QUERY": "sum(irate(node_network_receive_bytes_total{job=\"node-exporter\", device=~\"ens.+\"}[1m]))",
+        "STEP": "1s",
+        "SERVER": "PROMETHEUS-OPERATOR"
+    },
+    "container_memory_usage_avg": {
+        "QUERY": "avg(container_memory_usage_bytes{namespace=\"default\",pod_name=~\"backend.+\", container_name!=\"POD\", container_name!=\"\"}) by (container_name)",
+        "STEP": "1s",
+        "SERVER": "PROMETHEUS-OPERATOR",
+        "NAMING_KEY": "container_name"
+    },
+    "container_cpu_usage_min": {
+        "QUERY": "min(namespace_pod_name_container_name:container_cpu_usage_seconds_total:sum_rate{namespace=\"default\", pod_name=~\"backend.+\", container_name!=\"POD\"}) by (container_name)",
+        "STEP": "1s",
+        "SERVER": "PROMETHEUS-OPERATOR",
+        "NAMING_KEY": "container_name"
+    },
+    "cpu_usage_per_namespace": {
+        "QUERY": "sum(namespace_pod_name_container_name:container_cpu_usage_seconds_total:sum_rate) by (namespace)",
+        "STEP": "1s",
+        "SERVER": "PROMETHEUS-OPERATOR",
+        "NAMING_KEY": "namespace"
+    },
+    "memory_usage_per_namespace": {
+        "QUERY": "sum(container_memory_rss{container_name!=\"\"}) by (namespace)",
+        "STEP": "1s",
+        "SERVER": "PROMETHEUS-OPERATOR",
+        "NAMING_KEY": "namespace"
+    }
+}
